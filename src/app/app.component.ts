@@ -16,7 +16,7 @@ import { ToastModule } from "primeng/toast";
   selector: "app-root",
   imports: [
     FormsModule,
-    // ask this
+    // ask about NgFor Import
     NgFor,
     ToDoCardComponent,
     TopbarComponent,

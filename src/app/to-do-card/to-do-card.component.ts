@@ -49,22 +49,18 @@ export class ToDoCardComponent {
   ) {}
 
   confirmDelete() {
-    console.log(this.displayEdit);
     this.confirmationService.confirm({
       message: "Are you sure you want to delete this task?",
       header: "Confirm Delete",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         console.log("Deleted");
-        console.log(this.displayEdit);
       },
     });
-    console.log(this.displayEdit);
   }
 
   openEdit() {
     this.displayEdit = true;
-    console.log("openEdit() called");
   }
 
   closeDialogHandler(isSaved: boolean) {

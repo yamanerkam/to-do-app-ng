@@ -1,9 +1,14 @@
-<p-dialog header="Edit Task" [(visible)]="displayEdit" [modal]="true" [style]="{ width: '400px' }" class="edit-dialog">
+<p-dialog header="Edit Task" [(visible)]="displayEdit" [modal]="true" (onHide)="saveHandler('cancel')"
+    [style]="{ width: '400px' }" class="edit-dialog">
     <form class="edit-form">
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" type="text" [(ngModel)]="todo.title" name="title" />
         </div>
+        <!--
+        ask about todo?.title
+        -->
+
 
         <div class="form-group">
             <label for="description">Description</label>
