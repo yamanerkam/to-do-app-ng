@@ -1,8 +1,5 @@
 <app-topbar [searchText]="searchText"></app-topbar>
 
 <div class="todo-list">
-  <app-to-do-card
-    *ngFor="let item of todoList"
-    [todo]="item"
-  ></app-to-do-card>
+  <app-to-do-card *ngFor="let item of todoList" [todo]="item"></app-to-do-card>
 </div>
