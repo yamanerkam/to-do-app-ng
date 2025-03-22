@@ -63,14 +63,14 @@ export class ToDoCardComponent {
     this.displayEdit = true;
   }
 
-  closeDialogHandler(isSaved: boolean) {
-    if (isSaved) {
+  closeDialogHandler(isSaved: string) {
+    if (isSaved == "save") {
       this.messageService.add({
         severity: "success",
         summary: "BASARILI",
         detail: "Islem basarili",
       });
-    } else {
+    } else if (isSaved == "cancel") {
       this.messageService.add({
         severity: "info",
         summary: "Info",

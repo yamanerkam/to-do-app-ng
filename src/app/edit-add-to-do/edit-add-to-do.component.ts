@@ -25,16 +25,16 @@ export class EditAddToDoComponent {
   @Input({ required: true }) todo!: TodoItem;
   @Input({ required: true }) displayEdit: boolean = false;
 
-  @Output() closeDialog: EventEmitter<boolean> = new EventEmitter();
+  @Output() closeDialog: EventEmitter<string> = new EventEmitter();
 
-  saveHandler(triggerType: "save" | "cancel") {
-    this.closeDialog.emit(triggerType == "save");
+  saveHandler(triggerType?: "save" | "cancel") {
+    this.closeDialog.emit(triggerType);
+    // this.closeDialog.emit(triggerType == "save");
     // if (triggerType == "save") {
     //   this.closeDialog.emit(true);
     // } else {
     //   this.closeDialog.emit(false);
     // }
-
     // triggerType == "save"
     //   ? this.closeDialog.emit(true)
     //   : this.closeDialog.emit(false);
