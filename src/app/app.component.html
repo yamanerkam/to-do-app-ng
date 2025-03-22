@@ -1,5 +1,14 @@
+<p-confirmDialog></p-confirmDialog>
+<p-toast />
+
+<!-- 
+genel yaklasim her zaman daha onemli loader dialog gibi parcalari her zaman app compoenentten calistir
+istisnalar haric tabi
+-->
 <app-topbar [searchText]="searchText"></app-topbar>
 
 <div class="todo-list">
-  <app-to-do-card *ngFor="let item of todoList" [todo]="item"></app-to-do-card>
+  @for (item of todoList; track $index) {
+  <app-to-do-card [todo]="item"></app-to-do-card>
+  }
 </div>

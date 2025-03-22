@@ -1,12 +1,18 @@
 import { Component, Input } from "@angular/core";
 import { CardModule } from "primeng/card";
-import { CommonModule } from "@angular/common";
+
+import { DatePipe } from "@angular/common";
+// sadece date pipe ile isimi cozdum
+
+// import { CommonModule } from "@angular/common"; => common mudlu agir bir modul ve her componinta bunu eklemeye gerek yok sadece gerekli directiveleri ve pipeleri ayri olarak import edebiliriz
 import { DialogModule } from "primeng/dialog";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { ConfirmationService } from "primeng/api";
+import { ConfirmationService, MessageService } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { CalendarModule } from "primeng/calendar";
+
+import { EditAddToDoComponent } from "../edit-add-to-do/edit-add-to-do.component";
 
 export interface TodoItem {
   id: number;
@@ -20,15 +26,15 @@ export interface TodoItem {
   selector: "app-to-do-card",
   imports: [
     CardModule,
-    CommonModule,
     ButtonModule,
     DialogModule,
     ConfirmDialogModule,
     FormsModule,
     CalendarModule,
+    DatePipe,
+    EditAddToDoComponent,
   ],
   standalone: true,
-  providers: [ConfirmationService],
   templateUrl: "./to-do-card.component.html",
   styleUrl: "./to-do-card.component.css",
 })
@@ -37,20 +43,45 @@ export class ToDoCardComponent {
 
   displayEdit = false;
 
-  constructor(private confirmationService: ConfirmationService) {}
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   confirmDelete() {
+    console.log(this.displayEdit);
     this.confirmationService.confirm({
       message: "Are you sure you want to delete this task?",
       header: "Confirm Delete",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         console.log("Deleted");
+        console.log(this.displayEdit);
       },
     });
+    console.log(this.displayEdit);
   }
 
   openEdit() {
     this.displayEdit = true;
+    console.log("openEdit() called");
+  }
+
+  closeDialogHandler(isSaved: boolean) {
+    if (isSaved) {
+      this.messageService.add({
+        severity: "success",
+        summary: "BASARILI",
+        detail: "Islem basarili",
+      });
+    } else {
+      this.messageService.add({
+        severity: "info",
+        summary: "Info",
+        detail: "Islem iptal edildi",
+      });
+    }
+
+    this.displayEdit = false;
   }
 }

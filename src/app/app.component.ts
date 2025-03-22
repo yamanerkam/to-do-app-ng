@@ -1,19 +1,27 @@
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
 import { FormsModule } from "@angular/forms";
-import { CommonModule } from "@angular/common";
+
+// import { CommonModule } from "@angular/common";
+// ngFor module yeterli
 import { TodoItem } from "./to-do-card/to-do-card.component";
 import { ToDoCardComponent } from "./to-do-card/to-do-card.component";
 import { TopbarComponent } from "./topbar/topbar.component";
+import { NgFor } from "@angular/common";
+
+// genel yaklasim
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ToastModule } from "primeng/toast";
 
 @Component({
   selector: "app-root",
   imports: [
-    RouterOutlet,
     FormsModule,
-    CommonModule,
+    // ask this
+    NgFor,
     ToDoCardComponent,
     TopbarComponent,
+    ConfirmDialogModule,
+    ToastModule,
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",

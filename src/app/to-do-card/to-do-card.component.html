@@ -11,38 +11,5 @@
     </div>
 </p-card>
 
-<p-confirmDialog></p-confirmDialog>
-
-<p-dialog header="Edit Task" [(visible)]="displayEdit" [modal]="true" [style]="{ width: '400px' }" class="edit-dialog">
-    <form class="edit-form">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input id="title" type="text" [(ngModel)]="todo.title" name="title" />
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" [(ngModel)]="todo.description" name="description" rows="3"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="status">Status</label>
-            <input id="status" type="text" [(ngModel)]="todo.status" name="status" />
-        </div>
-        <div class="form-group">
-            <label for="createdOn">Created On</label>
-            <p-calendar [(ngModel)]="todo.createdOn" inputId="createdOn" name="createdOn" dateFormat="yy-mm-dd"
-                showIcon="true" [appendTo]="'body'"></p-calendar>
-        </div>
-
-    </form>
-
-    <ng-template pTemplate="footer">
-        <div class="footer-buttons">
-            <button pButton label="Cancel" icon="pi pi-times" class="p-button-text"
-                (click)="displayEdit = false"></button>
-            <button pButton label="Save" icon="pi pi-check" class="p-button-primary"
-                (click)="displayEdit = false"></button>
-        </div>
-    </ng-template>
-</p-dialog>
+<app-edit-app-to-do [todo]="todo" [displayEdit]="displayEdit"
+    (closeDialog)="closeDialogHandler($event)"></app-edit-app-to-do>

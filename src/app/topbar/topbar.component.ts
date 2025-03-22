@@ -1,15 +1,15 @@
 import { Component, Input } from "@angular/core";
 import { InputTextModule } from "primeng/inputtext";
-import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
 import { DialogModule } from "primeng/dialog";
 import { CalendarModule } from "primeng/calendar";
+import { ConfirmationService } from "primeng/api";
+import { MessageService } from "primeng/api";
 
 @Component({
   selector: "app-topbar",
   imports: [
-    CommonModule,
     FormsModule,
     InputTextModule,
     ButtonModule,
@@ -28,6 +28,23 @@ export class TopbarComponent {
   newStatus = "";
   newDate: Date = new Date();
 
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
+
+  confirmAdd() {
+    this.confirmationService.confirm({
+      message: "Are you sure you want to add this task?",
+      header: "Confirm Add",
+      icon: "pi pi-times-circle",
+      accept: () => {
+        console.log("added");
+        this.addNewTask();
+      },
+    });
+  }
+
   addNewTask() {
     console.log("New Task:", {
       title: this.newTitle,
@@ -42,5 +59,11 @@ export class TopbarComponent {
     this.newDescription = "";
     this.newStatus = "";
     this.newDate = new Date();
+    this.messageService.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Islem basariyla tamamlandi.",
+      life: 3000,
+    });
   }
 }
