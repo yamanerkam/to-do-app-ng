@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { CardModule } from "primeng/card";
 
-import { DatePipe } from "@angular/common";
+import { DatePipe, NgIf } from "@angular/common";
 // sadece date pipe ile isimi cozdum
 
 // import { CommonModule } from "@angular/common"; => common mudlu agir bir modul ve her componinta bunu eklemeye gerek yok sadece gerekli directiveleri ve pipeleri ayri olarak import edebiliriz

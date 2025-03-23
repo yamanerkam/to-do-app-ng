@@ -30,14 +30,6 @@ export class TopbarComponent {
   newStatus = "";
   newDate: Date = new Date();
 
-  todo = {
-    id: 1,
-    title: "Buy groceries",
-    description: "Get milk, eggs, and bread",
-    status: "Open",
-    createdOn: new Date("2023-01-10"),
-  };
-
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService
