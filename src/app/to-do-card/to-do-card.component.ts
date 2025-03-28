@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { CardModule } from "primeng/card";
 
 import { DatePipe, NgIf } from "@angular/common";
@@ -13,8 +13,10 @@ import { FormsModule } from "@angular/forms";
 import { CalendarModule } from "primeng/calendar";
 
 import { EditAddToDoComponent } from "../edit-add-to-do/edit-add-to-do.component";
+import { SingletonService } from "../services/singleton.service";
+import { NonSingletonService } from "../services/non-singleton.service";
 
-export interface TodoItem {
+export interface TodoItem  {
   id: number;
   title: string;
   description: string;
@@ -37,15 +39,24 @@ export interface TodoItem {
   standalone: true,
   templateUrl: "./to-do-card.component.html",
   styleUrl: "./to-do-card.component.css",
+  providers:[NonSingletonService]
 })
-export class ToDoCardComponent {
+export class ToDoCardComponent implements OnInit{
   @Input() todo!: TodoItem;
 
   displayEdit = false;
 
+
+  ngOnInit():void{
+   // console.log(this.singletonService.randomID + ' from toDoCard singleton');
+   console.log(this.nonSingletonService.randomID + ' from toDoCard NON singleton');
+  }
+
   constructor(
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private singletonService: SingletonService,
+    private nonSingletonService: NonSingletonService
   ) {}
 
   confirmDelete() {

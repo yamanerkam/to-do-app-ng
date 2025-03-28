@@ -67,6 +67,5 @@ export class EditAddToDoComponent implements OnInit {
 
   onSubmit() {
     console.log(this.toDoForm.value);
-    this.toDoForm.reset();
   }
 }

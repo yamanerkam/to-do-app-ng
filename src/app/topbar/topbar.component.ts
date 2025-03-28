@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Inject, Input, OnInit } from "@angular/core";
 import { InputTextModule } from "primeng/inputtext";
 import { FormsModule } from "@angular/forms";
 import { ButtonModule } from "primeng/button";
@@ -7,6 +7,8 @@ import { CalendarModule } from "primeng/calendar";
 import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
 import { EditAddToDoComponent } from "../edit-add-to-do/edit-add-to-do.component";
+import { SingletonService } from "../services/singleton.service";
+import { NonSingletonService } from "../services/non-singleton.service";
 
 @Component({
   selector: "app-topbar",
@@ -20,8 +22,11 @@ import { EditAddToDoComponent } from "../edit-add-to-do/edit-add-to-do.component
   ],
   templateUrl: "./topbar.component.html",
   styleUrl: "./topbar.component.css",
+  providers:[NonSingletonService]
 })
-export class TopbarComponent {
+export class TopbarComponent implements OnInit {
+// singletonService = Inject(SingletonService)
+  
   @Input() searchText: string = "";
   displayAddDialog = false;
 
@@ -30,10 +35,20 @@ export class TopbarComponent {
   newStatus = "";
   newDate: Date = new Date();
 
+
+  ngOnInit(): void {
+    console.log(this.singletonService.randomID + ' from topbar singleton');
+    console.log(this.nonSingletonService.randomID + ' from topbar NON singleton');
+
+  }
+
   constructor(
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private singletonService: SingletonService,
+    private nonSingletonService: NonSingletonService
+  ) {
+  }
 
   // confirmAdd() {
   //   this.confirmationService.confirm({
