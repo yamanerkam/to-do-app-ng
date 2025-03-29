@@ -4,7 +4,7 @@ export interface TodoItem {
   id: string;
   title: string;
   description: string;
-  status: 'Not Started' | 'In progress' | 'Done'
+  status: 'Not Started' | 'In Progress' | 'Done'
   createdOn: Date;
 }
 
@@ -19,7 +19,7 @@ export class AppService {
       id: '1',
       title: "Buy groceries",
       description: "Get milk, eggs, and bread",
-      status: 'In progress',
+      status: 'In Progress',
       createdOn: new Date("2023-01-10"),
     },
     {
