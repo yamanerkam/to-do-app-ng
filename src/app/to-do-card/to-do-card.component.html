@@ -2,7 +2,7 @@
     <div class="todo-card-body">
         <p>{{ todo.description }}</p>
         <p>Status: {{ todo.status }}</p>
-        <p>Created on: {{ todo.createdOn | date: 'shortDate' }}</p>
+        <p>Created on: {{ todo.createdOn | date: 'd MMMM y' }}</p>
     </div>
 
     <div class="todo-card-actions">

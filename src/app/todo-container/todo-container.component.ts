@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ToDoCardComponent, TodoItem } from '../to-do-card/to-do-card.component';
-import { AppService } from '../app.service';
+import { ToDoCardComponent } from '../to-do-card/to-do-card.component';
+import { AppService, TodoItem } from '../app.service';
 
 @Component({
   selector: 'app-todo-container',

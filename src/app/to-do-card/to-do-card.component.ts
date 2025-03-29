@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { CardModule } from "primeng/card";
 
-import { DatePipe, NgIf } from "@angular/common";
+import { DatePipe } from "@angular/common";
 // sadece date pipe ile isimi cozdum
 
 // import { CommonModule } from "@angular/common"; => common mudlu agir bir modul ve her componinta bunu eklemeye gerek yok sadece gerekli directiveleri ve pipeleri ayri olarak import edebiliriz
@@ -15,14 +15,9 @@ import { CalendarModule } from "primeng/calendar";
 import { EditAddToDoComponent, outputData } from "../edit-add-to-do/edit-add-to-do.component";
 import { SingletonService } from "../services/singleton.service";
 import { NonSingletonService } from "../services/non-singleton.service";
+import { AppService, TodoItem } from "../app.service";
 
-export interface TodoItem  {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  createdOn: Date;
-}
+
 
 @Component({
   selector: "app-to-do-card",
@@ -49,14 +44,15 @@ export class ToDoCardComponent implements OnInit{
 
   ngOnInit():void{
    // console.log(this.singletonService.randomID + ' from toDoCard singleton');
-   console.log(this.nonSingletonService.randomID + ' from toDoCard NON singleton');
+   // console.log(this.nonSingletonService.randomID + ' from toDoCard NON singleton');
   }
 
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private singletonService: SingletonService,
-    private nonSingletonService: NonSingletonService
+    private nonSingletonService: NonSingletonService,
+    private appService: AppService
   ) {}
 
   confirmDelete() {
@@ -65,7 +61,13 @@ export class ToDoCardComponent implements OnInit{
       header: "Confirm Delete",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
-        console.log("Deleted");
+        const index = this.appService.todoList.findIndex(item =>item.id == this.todo.id)
+        
+        if(index > -1){
+          this.appService.todoList.splice(index,1)
+        }else{
+          console.log('error')
+        }
       },
     });
   }
@@ -77,11 +79,20 @@ export class ToDoCardComponent implements OnInit{
   closeDialogHandler(data:outputData) {
     if (data.triggerType == "save") {
 
+      const index = this.appService.todoList.findIndex(item =>item.id == data.todoFormData.id)
+
+      if(index > -1){
+        this.appService.todoList[index] = data.todoFormData;
+      }else{
+        console.log('error')
+      }
+
       this.messageService.add({
         severity: "success",
         summary: "BASARILI",
         detail: "Islem basarili",
       });
+
     } else if (data.triggerType == "cancel") {
       this.messageService.add({
         severity: "info",

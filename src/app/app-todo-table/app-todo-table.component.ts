@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { TodoItem } from '../to-do-card/to-do-card.component';
-import { AppService } from '../app.service';
+import { AppService, TodoItem } from '../app.service';
 
 @Component({
   selector: 'app-todo-table',
@@ -12,7 +11,7 @@ import { AppService } from '../app.service';
 export class TodoTableComponent {
   todoList: TodoItem[] = []
 
-  constructor(appService:AppService){
+  constructor(appService: AppService) {
     this.todoList = appService.todoList;
   }
 }

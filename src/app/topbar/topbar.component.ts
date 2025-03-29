@@ -38,8 +38,8 @@ export class TopbarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.singletonService.randomID + ' from topbar singleton');
-    console.log(this.nonSingletonService.randomID + ' from topbar NON singleton');
+   // console.log(this.singletonService.randomID + ' from topbar singleton');
+   // console.log(this.nonSingletonService.randomID + ' from topbar NON singleton');
 
   }
  

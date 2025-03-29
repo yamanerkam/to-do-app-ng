@@ -5,7 +5,7 @@ export class NonSingletonService {
   randomID = Math.random();
 
   constructor() {
-    console.log('NON SingletonService created');
+   // console.log('NON SingletonService created');
    }
 
   getRandomID(){
