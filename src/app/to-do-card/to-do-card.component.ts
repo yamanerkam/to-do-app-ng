@@ -12,12 +12,12 @@ import { ButtonModule } from "primeng/button";
 import { FormsModule } from "@angular/forms";
 import { CalendarModule } from "primeng/calendar";
 
-import { EditAddToDoComponent } from "../edit-add-to-do/edit-add-to-do.component";
+import { EditAddToDoComponent, outputData } from "../edit-add-to-do/edit-add-to-do.component";
 import { SingletonService } from "../services/singleton.service";
 import { NonSingletonService } from "../services/non-singleton.service";
 
 export interface TodoItem  {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: string;
@@ -74,14 +74,15 @@ export class ToDoCardComponent implements OnInit{
     this.displayEdit = true;
   }
 
-  closeDialogHandler(isSaved: string) {
-    if (isSaved == "save") {
+  closeDialogHandler(data:outputData) {
+    if (data.triggerType == "save") {
+
       this.messageService.add({
         severity: "success",
         summary: "BASARILI",
         detail: "Islem basarili",
       });
-    } else if (isSaved == "cancel") {
+    } else if (data.triggerType == "cancel") {
       this.messageService.add({
         severity: "info",
         summary: "Info",

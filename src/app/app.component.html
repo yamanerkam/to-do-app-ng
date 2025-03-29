@@ -5,10 +5,28 @@
 genel yaklasim her zaman daha onemli loader dialog gibi parcalari her zaman app compoenentten calistir
 istisnalar haric tabi
 -->
+
+<div class="layout">
+
 <app-topbar [searchText]="searchText"></app-topbar>
 
-<div class="todo-list">
-  @for (item of todoList; track $index) {
-  <app-to-do-card [todo]="item"></app-to-do-card>
-  }
+<div class="main">
+  <div style="width: 50%;" >
+    <app-todo-container></app-todo-container>
+  </div>
+
+  <div >
+    <app-todo-table>
+    </app-todo-table>
+  </div>
 </div>
+</div>
+
+
+
+
+
+<!--
+xxxxxxx
+-->
+

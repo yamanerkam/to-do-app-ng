@@ -6,9 +6,10 @@ import { DialogModule } from "primeng/dialog";
 import { CalendarModule } from "primeng/calendar";
 import { ConfirmationService } from "primeng/api";
 import { MessageService } from "primeng/api";
-import { EditAddToDoComponent } from "../edit-add-to-do/edit-add-to-do.component";
+import { EditAddToDoComponent, outputData } from "../edit-add-to-do/edit-add-to-do.component";
 import { SingletonService } from "../services/singleton.service";
 import { NonSingletonService } from "../services/non-singleton.service";
+import { AppService } from "../app.service";
 
 @Component({
   selector: "app-topbar",
@@ -41,12 +42,13 @@ export class TopbarComponent implements OnInit {
     console.log(this.nonSingletonService.randomID + ' from topbar NON singleton');
 
   }
-
+ 
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private singletonService: SingletonService,
-    private nonSingletonService: NonSingletonService
+    private nonSingletonService: NonSingletonService,
+    private appService:AppService
   ) {
   }
 
@@ -78,14 +80,18 @@ export class TopbarComponent implements OnInit {
     this.newDate = new Date();
   }
 
-  closeDialogHandler(isSaved: string) {
-    if (isSaved == "save") {
+  closeDialogHandler(data:outputData) {
+    console.log(data)
+    if (data.triggerType == "save") {
+
+      this.appService.todoList.push(data.todoFormData)
+
       this.messageService.add({
         severity: "success",
         summary: "BASARILI",
-        detail: "Islem basarili",
+        detail: "(add) Islem basarili",
       });
-    } else if (isSaved == "cancel") {
+    } else if (data.triggerType == "cancel") {
       this.messageService.add({
         severity: "info",
         summary: "Info",

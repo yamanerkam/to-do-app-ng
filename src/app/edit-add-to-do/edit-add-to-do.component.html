@@ -1,7 +1,7 @@
-<p-dialog header="{{headerName}} Task" [(visible)]="displayEdit" [modal]="true" (onHide)="saveHandler()"
+<p-dialog header="{{headerName}} Task" [(visible)]="displayEdit" [modal]="true" (onHide)="saveHandler('close')"
     [style]="{ width: '400px' }" class="edit-dialog">
 
-    <form class="edit-form" [formGroup]="toDoForm" (ngSubmit)="onSubmit()">
+    <form class="edit-form" [formGroup]="toDoForm" >
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" type="text" name="title" formControlName="title" />
@@ -26,7 +26,7 @@
         <div class="footer-buttons">
             <button pButton label="Cancel" type="button" icon="pi pi-times" class="p-button-text"
                 (click)="saveHandler('cancel')"></button>
-            <button pButton label="Save" type="submit" icon="pi pi-check" class="p-button-primary"
+            <button pButton label="Save" icon="pi pi-check" class="p-button-primary"
                 (click)="saveHandler('save')"></button>
         </div>
     </form>
