@@ -1,33 +1,36 @@
-<p-dialog header="Edit Task" [(visible)]="displayEdit" [modal]="true" [style]="{ width: '400px' }" class="edit-dialog">
-    <form class="edit-form">
+<p-dialog header="{{headerName}} Task" [(visible)]="displayEdit" [modal]="true" (onHide)="saveHandler('close')"
+    [style]="{ width: '400px' }" class="edit-dialog">
+
+    <form class="edit-form" [formGroup]="toDoForm" >
         <div class="form-group">
             <label for="title">Title</label>
-            <input id="title" type="text" [(ngModel)]="todo.title" name="title" />
+            <input id="title" type="text" name="title" formControlName="title" />
         </div>
-
+        <!--
+            ask about todo?.title
+            -->
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" [(ngModel)]="todo.description" name="description" rows="3"></textarea>
+            <textarea id="description" name="description" formControlName="description" rows="3"></textarea>
         </div>
 
         <div class="form-group">
             <label for="status">Status</label>
-            <input id="status" type="text" [(ngModel)]="todo.status" name="status" />
+            <input id="status" type="text" formControlName="status" name="status" />
         </div>
         <div class="form-group">
             <label for="createdOn">Created On</label>
-            <p-calendar [(ngModel)]="todo.createdOn" inputId="createdOn" name="createdOn" dateFormat="yy-mm-dd"
-                showIcon="true" [appendTo]="'body'"></p-calendar>
+            <p-datePicker inputId="createdOn" name="createdOn" formControlName="createdOn" dateFormat="yy-mm-dd"
+                showIcon="true" [appendTo]="'body'"></p-datePicker>
         </div>
-
-    </form>
-
-    <ng-template pTemplate="footer">
         <div class="footer-buttons">
-            <button pButton label="Cancel" icon="pi pi-times" class="p-button-text"
+            <button pButton label="Cancel" type="button" icon="pi pi-times" class="p-button-text"
                 (click)="saveHandler('cancel')"></button>
             <button pButton label="Save" icon="pi pi-check" class="p-button-primary"
                 (click)="saveHandler('save')"></button>
         </div>
-    </ng-template>
+    </form>
+
+
+
 </p-dialog>

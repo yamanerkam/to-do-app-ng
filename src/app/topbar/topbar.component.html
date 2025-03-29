@@ -9,33 +9,5 @@
     </div>
 </div>
 
-<p-dialog header="Add New Task" [(visible)]="displayAddDialog" [modal]="true" [style]="{ width: '400px' }">
-    <form class="add-form">
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input id="title" type="text" [(ngModel)]="newTitle" name="title" />
-        </div>
-
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" rows="3" [(ngModel)]="newDescription" name="description"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="status">Status</label>
-            <input id="status" type="text" [(ngModel)]="newStatus" name="status" />
-        </div>
-
-        <div class="form-group">
-            <label for="date">Created On</label>
-            <p-calendar [(ngModel)]="newDate" inputId="date" name="date" dateFormat="yy-mm-dd" showIcon="true"
-                [appendTo]="'body'"></p-calendar>
-        </div>
-    </form>
-
-    <ng-template pTemplate="footer">
-        <button pButton label="Cancel" icon="pi pi-times" class="p-button-text"
-            (click)="displayAddDialog = false"></button>
-        <button pButton label="Add" icon="pi pi-check" class="p-button-primary" (click)="confirmAdd()"></button>
-    </ng-template>
-</p-dialog>
+<app-edit-app-to-do [displayEdit]="displayAddDialog" actionType="add"
+    (closeDialog)="closeDialogHandler($event)"></app-edit-app-to-do>
