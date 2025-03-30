@@ -54,10 +54,12 @@ export class EditAddToDoComponent implements OnInit, OnChanges {
   ];
 
   ngOnInit(): void {
+    console.log('on init')
     this.headerName = this.actionType == "edit" ? "Edit" : "Add";
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('changes')
     if (this.todo) {
       this.toDoForm.patchValue({ ...this.todo })
       // this.toDoForm.patchValue({
