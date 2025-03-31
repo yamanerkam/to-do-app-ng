@@ -6,7 +6,9 @@
             <label for="title">Title</label>
             <input id="title" type="text" name="title" formControlName="title" />
             @if (invalidFieldChecker("title")) {
-                <div style="color: red;" [innerHTML]="invalidFieldMessage('title')"> </div>
+                <div style="color: red;">
+                {{ invalidFieldMessage('title')}}    
+                </div>
             }
         </div>
         <!--
@@ -16,7 +18,9 @@
             <label for="description">Description</label>
             <textarea id="description" name="description" formControlName="description" rows="3"></textarea>
             @if (invalidFieldChecker("description")) {
-                <div style="color: red;" [innerHTML]="invalidFieldMessage('description')"> </div>
+                <div style="color: red;">
+                {{invalidFieldMessage('description')}}    
+                </div>
             }
         </div>
 
@@ -25,7 +29,9 @@
             <p-select id="status" formControlName="status" name="status" [options]="statusOptions" placeholder="Select status..." 
             ></p-select>
             @if (invalidFieldChecker("status")) {
-                <div style="color: red;" [innerHTML]="invalidFieldMessage('status')"> </div>
+                <div style="color: red;">
+                    {{invalidFieldMessage('status')}}    
+                </div>
             }
         </div>
         <div class="form-group">
@@ -33,7 +39,9 @@
             <p-datePicker inputId="createdOn" name="createdOn" formControlName="createdOn" dateFormat="dd MM yy"
                 showIcon="true" [appendTo]="'body'"></p-datePicker>
                 @if (invalidFieldChecker("createdOn")) {
-                    <div style="color: red;" [innerHTML]="invalidFieldMessage('createdOn')"> </div>
+                    <div style="color: red;">
+                        {{invalidFieldMessage('createdOn')}}    
+                    </div>
                 }
         </div>
         <div class="footer-buttons">

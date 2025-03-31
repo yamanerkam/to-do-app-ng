@@ -122,8 +122,7 @@ export class EditAddToDoComponent implements OnInit, OnChanges {
     }
   }
 
-  invalidFieldMessage(fieldName: string) {
-    return `<p>Where is the ${fieldName}???</p>`
+  invalidFieldMessage(fieldName: string): string {
+    return `Where is the ${fieldName}???`;
   }
-
 }
