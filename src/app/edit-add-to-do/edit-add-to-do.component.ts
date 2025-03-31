@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { DialogModule } from "primeng/dialog";
 import { SelectModule } from 'primeng/select';
 import { ButtonModule } from "primeng/button";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { FormGroup, FormControl } from "@angular/forms";
 
 import { DatePickerModule } from "primeng/datepicker";
@@ -39,19 +39,30 @@ export class EditAddToDoComponent implements OnInit, OnChanges {
 
   headerName!: string;
 
-  toDoForm = new FormGroup({
-    id: new FormControl<string | null>(null),
-    title: new FormControl(""),
-    description: new FormControl(""),
-    status: new FormControl<TodoStatus | null>(null),
-    createdOn: new FormControl<Date | null>(null),
-  });
+  toDoForm!: FormGroup;
 
+  constructor(private fb: FormBuilder) {
+    this.toDoForm = this.fb.group({
+
+      id: [null as string | null],
+      title: ["", Validators.required],
+      description: ["", Validators.required],
+      status: [null as TodoStatus | null, Validators.required],
+      createdOn: [null as Date | null, Validators.required],
+
+      // id: new FormControl<string | null>(null),
+      // title: new FormControl(""),
+      // description: new FormControl(""),
+      // status: new FormControl<TodoStatus | null>(null),
+      // createdOn: new FormControl<Date | null>(null),
+    })
+  }
   statusOptions = [
     'In Progress',
     'Done',
     'Not Started'
   ];
+
 
   ngOnInit(): void {
     console.log('on init')
@@ -93,6 +104,13 @@ export class EditAddToDoComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    console.log(this.toDoForm.value);
+    //   console.log('Form Data:', this.toDoForm.value);
+
+    //   if (this.toDoForm.valid) {
+    //     console.log('Form is valid');
+    //   } else {
+    //     console.log('Form is invalid');
+    //   }
+    // 
   }
 }
