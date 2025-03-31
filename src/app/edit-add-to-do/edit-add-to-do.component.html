@@ -5,6 +5,9 @@
         <div class="form-group">
             <label for="title">Title</label>
             <input id="title" type="text" name="title" formControlName="title" />
+            @if (invalidFieldChecker("title")) {
+                <div style="color: red;" [innerHTML]="invalidFieldMessage('title')"> </div>
+            }
         </div>
         <!--
             ask about todo?.title
@@ -12,17 +15,26 @@
         <div class="form-group">
             <label for="description">Description</label>
             <textarea id="description" name="description" formControlName="description" rows="3"></textarea>
+            @if (invalidFieldChecker("description")) {
+                <div style="color: red;" [innerHTML]="invalidFieldMessage('description')"> </div>
+            }
         </div>
 
         <div class="form-group">
             <label for="status">Status</label>
             <p-select id="status" formControlName="status" name="status" [options]="statusOptions" placeholder="Select status..." 
             ></p-select>
+            @if (invalidFieldChecker("status")) {
+                <div style="color: red;" [innerHTML]="invalidFieldMessage('status')"> </div>
+            }
         </div>
         <div class="form-group">
             <label for="createdOn">Created On</label>
             <p-datePicker inputId="createdOn" name="createdOn" formControlName="createdOn" dateFormat="dd MM yy"
                 showIcon="true" [appendTo]="'body'"></p-datePicker>
+                @if (invalidFieldChecker("createdOn")) {
+                    <div style="color: red;" [innerHTML]="invalidFieldMessage('createdOn')"> </div>
+                }
         </div>
         <div class="footer-buttons">
             <button pButton label="Cancel" type="button" icon="pi pi-times" class="p-button-text"
