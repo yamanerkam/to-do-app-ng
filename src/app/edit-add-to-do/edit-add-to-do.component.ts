@@ -55,7 +55,9 @@ export class EditAddToDoComponent implements OnInit, OnChanges {
       // description: new FormControl(""),
       // status: new FormControl<TodoStatus | null>(null),
       // createdOn: new FormControl<Date | null>(null),
-    }, { updateOn: 'blur' })
+    }
+      // , { updateOn: 'blur' }
+    )
   }
   statusOptions = [
     'In Progress',
@@ -115,7 +117,7 @@ export class EditAddToDoComponent implements OnInit, OnChanges {
   }
 
   invalidFieldChecker(fieldName: string) {
-    if (this.toDoForm.get(fieldName)?.invalid && this.toDoForm.get(fieldName)?.touched) {
+    if (this.toDoForm.get(fieldName)?.invalid && this.toDoForm.get(fieldName)?.dirty) {
       return true
     } else {
       return false
