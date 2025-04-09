@@ -12,6 +12,8 @@ export class TodoContainerComponent {
   todoList: TodoItem[] = [];
   
   constructor(appService:AppService){
-    this.todoList = appService.todoList;
+    appService.todoListObs$.subscribe((data: TodoItem[]) => {
+      this.todoList = data;
+    });
   }
 }

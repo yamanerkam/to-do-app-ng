@@ -84,7 +84,7 @@ export class TopbarComponent implements OnInit {
     console.log(data)
     if (data.triggerType == "save") {
 
-      this.appService.todoList.push(data.todoFormData)
+     // this.appService.todoList.push(data.todoFormData)
 
       this.messageService.add({
         severity: "success",

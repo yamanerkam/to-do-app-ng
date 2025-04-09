@@ -60,15 +60,15 @@ export class ToDoCardComponent implements OnInit{
       message: "Are you sure you want to delete this task?",
       header: "Confirm Delete",
       icon: "pi pi-exclamation-triangle",
-      accept: () => {
-        const index = this.appService.todoList.findIndex(item =>item.id == this.todo.id)
+      // accept: () => {
+      //   const index = this.appService.todoList.findIndex(item =>item.id == this.todo.id)
         
-        if(index > -1){
-          this.appService.todoList.splice(index,1)
-        }else{
-          console.log('error')
-        }
-      },
+      //   if(index > -1){
+      //     this.appService.todoList.splice(index,1)
+      //   }else{
+      //     console.log('error')
+      //   }
+      // },
     });
   }
 
@@ -79,13 +79,13 @@ export class ToDoCardComponent implements OnInit{
   closeDialogHandler(data:outputData) {
     if (data.triggerType == "save") {
 
-      const index = this.appService.todoList.findIndex(item =>item.id == data.todoFormData.id)
+      // const index = this.appService.todoList.findIndex(item =>item.id == data.todoFormData.id)
 
-      if(index > -1){
-        this.appService.todoList[index] = data.todoFormData;
-      }else{
-        console.log('error')
-      }
+      // if(index > -1){
+      //   this.appService.todoList[index] = data.todoFormData;
+      // }else{
+      //   console.log('error')
+      // }
 
       this.messageService.add({
         severity: "success",

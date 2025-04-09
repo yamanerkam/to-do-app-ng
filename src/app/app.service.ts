@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 
 export interface TodoItem {
   id: string;
@@ -13,51 +15,38 @@ export type TodoStatus = TodoItem['status'];
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
-  todoList: TodoItem[] = [
-    {
-      id: '1',
-      title: "Buy groceries",
-      description: "Get milk, eggs, and bread",
-      status: 'In Progress',
-      createdOn: new Date("2023-01-10"),
-    },
-    {
-      id: '2',
-      title: "Walk the dog",
-      description: "Take Fido around the block for 15 minutes",
-      status: 'Done',
-      createdOn: new Date("2023-02-14"),
-    },
-    {
-      id: '3',
-      title: "Send invoices",
-      description: "Email all outstanding invoices",
-      status: 'Not Started',
-      createdOn: new Date("2023-03-05"),
-    },
-    {
-      id: '4',
-      title: "Send invoices",
-      description: "Email all outstanding invoices",
-      status: 'Not Started',
-      createdOn: new Date("2023-03-05"),
-    },
-    {
-      id: '5',
-      title: "Send invoices",
-      description: "Email all outstanding invoices",
-      status: 'Not Started',
-      createdOn: new Date("2023-03-05"),
-    },
-    {
-      id: '6',
-      title: "Send invoices",
-      description: "Email all outstanding invoices",
-      status: 'Not Started',
-      createdOn: new Date("2023-03-05"),
-    },
-  ];
+export class AppService implements OnInit {
+  httpService = inject(HttpClient)
 
+
+  todoListSubject = new BehaviorSubject<TodoItem[]>([])
+  todoListObs$ = this.todoListSubject.asObservable();
+
+
+  getTodos():Observable<TodoItem[]>{
+  return this.httpService.get<TodoItem[]>('http://localhost:3000/todoList').pipe(map((res:TodoItem[])=>{
+    this.todoListSubject.next(res)
+    return res;
+  }),
+  catchError((err)=>{
+    throw new Error(err);
+  })
+  );
+  }
+
+  deleteToDo(todoID:string){
+  }
+
+  addToDo(todo:TodoItem){
+
+  }
+
+  updateToDo(todoID:string){
+
+  }
   constructor() { }
+
+  ngOnInit(): void {
+  }
+
 }

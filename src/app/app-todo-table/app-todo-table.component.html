@@ -1,4 +1,4 @@
-<p-table  [value]="todoList" [tableStyle]="{ 'min-width': '10rem' }">
+<p-table  [value]="(appService.todoListObs$ | async) ?? []" [tableStyle]="{ 'min-width': '10rem' }">
     <ng-template #header>
         <tr>
             <th>Title</th>

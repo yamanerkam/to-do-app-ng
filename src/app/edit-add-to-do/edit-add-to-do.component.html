@@ -1,6 +1,5 @@
 <p-dialog header="{{headerName}} Task" [(visible)]="displayEdit" [modal]="true" (onHide)="saveHandler('close')"
     [style]="{ width: '400px' }" class="edit-dialog">
-
     <form class="edit-form" [formGroup]="toDoForm" (submit)="onSubmit()"  >
         <div class="form-group">
             <label for="title">Title</label>
