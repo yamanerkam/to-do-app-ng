@@ -8,7 +8,7 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { SingletonService } from '../services/singleton.service';
 import { NonSingletonService } from '../services/non-singleton.service';
-import { AppService, TodoItem, TodoStatus } from '../app.service';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-topbar',
@@ -22,35 +22,9 @@ export class TopbarComponent implements OnInit {
 
   @Input() searchText: string = '';
 
-  newTitle = '';
-  newDescription = '';
-  newStatus: TodoStatus | '' = '';
-  newDate: Date = new Date();
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    // console.log(this.singletonService.randomID + ' from topbar singleton');
-    // console.log(this.nonSingletonService.randomID + ' from topbar NON singleton');
-  }
-
-  constructor(
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private singletonService: SingletonService,
-    private nonSingletonService: NonSingletonService,
-    private appService: AppService
-  ) {}
-
-  // confirmAdd() {
-  //   this.confirmationService.confirm({
-  //     message: "Are you sure you want to add this task?",
-  //     header: "Confirm Add",
-  //     icon: "pi pi-times-circle",
-  //     accept: () => {
-  //       console.log("added");
-  //       this.addNewTask();
-  //     },
-  //   });
-  // }
+  constructor(private appService: AppService) {}
 
   addNewTask() {
     this.appService.todoFormToggler('add');
