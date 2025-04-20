@@ -3,7 +3,8 @@ import { FormsModule } from "@angular/forms";
 
 // import { CommonModule } from "@angular/common";
 // ngFor module yeterli
-import { TopbarComponent } from "./topbar/topbar.component";
+import { TopbarComponent } from "./topbar/topbar.component"
+
 
 // genel yaklasim
 import { ConfirmDialogModule } from "primeng/confirmdialog";
@@ -13,6 +14,7 @@ import { TodoContainerComponent } from "./todo-container/todo-container.componen
 import { AppService } from "./app.service";
 import { RxjsService } from "./services/rxjs.service";
 import { Subject } from "rxjs";
+import { EditAddToDoComponent } from "./edit-add-to-do/edit-add-to-do.component";
 
 @Component({
   selector: "app-root",
@@ -23,7 +25,8 @@ import { Subject } from "rxjs";
     ConfirmDialogModule,
     ToastModule,
     TodoTableComponent,
-    TodoContainerComponent
+    TodoContainerComponent,
+    EditAddToDoComponent
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",

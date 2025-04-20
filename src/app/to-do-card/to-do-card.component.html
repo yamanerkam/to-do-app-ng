@@ -7,9 +7,7 @@
 
     <div class="todo-card-actions">
         <button pButton label="Edit" icon="pi pi-pencil" class="p-button-secondary" (click)="openEdit()"></button>
-        <button pButton label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="confirmDelete()"></button>
+        <button pButton label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="confirmDelete(todo.id)"></button>
     </div>
 </p-card>
 
-<app-edit-app-to-do [todo]="todo" [displayEdit]="displayEdit" actionType='edit'
-    (closeDialog)="closeDialogHandler($event)"></app-edit-app-to-do>

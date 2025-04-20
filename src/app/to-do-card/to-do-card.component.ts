@@ -55,26 +55,35 @@ export class ToDoCardComponent implements OnInit{
     private appService: AppService
   ) {}
 
-  confirmDelete() {
+  confirmDelete(id:string) {
     this.confirmationService.confirm({
       message: "Are you sure you want to delete this task?",
       header: "Confirm Delete",
       icon: "pi pi-exclamation-triangle",
-      // accept: () => {
-      //   const index = this.appService.todoList.findIndex(item =>item.id == this.todo.id)
+      accept: () => {
+      //  this.appService.deleteToDo(id)
         
-      //   if(index > -1){
-      //     this.appService.todoList.splice(index,1)
-      //   }else{
-      //     console.log('error')
-      //   }
-      // },
+      this.appService.deleteToDo(id).subscribe({
+        next: () => console.log('Deleted successfully'),
+        error: err => alert(err.message)
+      });
+
+
+       // todoList.findIndex(item =>item.id == this.todo.id)
+        
+        // if(index > -1){
+        //   this.appService.todoList.splice(index,1)
+        // }else{
+        //   console.log('error')
+        // }
+      },
     });
   }
 
   openEdit() {
-    this.displayEdit = true;
+    this.appService.todoFormToggler('edit',);
   }
+ 
 
   closeDialogHandler(data:outputData) {
     if (data.triggerType == "save") {

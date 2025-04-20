@@ -5,9 +5,7 @@
 
     <div class="action-area">
         <button pButton label="Add New" icon="pi pi-plus" class="p-button-success"
-            (click)="displayAddDialog = true"></button>
+            (click)="addNewTask()"></button>
     </div>
 </div>
 
-<app-edit-app-to-do [displayEdit]="displayAddDialog" actionType="add"
-    (closeDialog)="closeDialogHandler($event)"></app-edit-app-to-do>

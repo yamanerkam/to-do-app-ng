@@ -9,7 +9,7 @@ import { MessageService } from "primeng/api";
 import { EditAddToDoComponent, outputData } from "../edit-add-to-do/edit-add-to-do.component";
 import { SingletonService } from "../services/singleton.service";
 import { NonSingletonService } from "../services/non-singleton.service";
-import { AppService } from "../app.service";
+import { AppService, TodoItem, TodoStatus } from "../app.service";
 
 @Component({
   selector: "app-topbar",
@@ -33,7 +33,7 @@ export class TopbarComponent implements OnInit {
 
   newTitle = "";
   newDescription = "";
-  newStatus = "";
+  newStatus : TodoStatus  | '' = "";
   newDate: Date = new Date();
 
 
@@ -65,26 +65,18 @@ export class TopbarComponent implements OnInit {
   // }
 
   addNewTask() {
-    console.log("New Task:", {
-      title: this.newTitle,
-      description: this.newDescription,
-      status: this.newStatus,
-      createdOn: this.newDate,
-    });
-
-    this.displayAddDialog = false;
-
-    this.newTitle = "";
-    this.newDescription = "";
-    this.newStatus = "";
-    this.newDate = new Date();
+    this.appService.todoFormToggler('add');
   }
 
   closeDialogHandler(data:outputData) {
     console.log(data)
     if (data.triggerType == "save") {
 
-     // this.appService.todoList.push(data.todoFormData)
+      // this.appService.addToDo(newTodo).subscribe({
+      //   next: () => console.log('Added successfully'),
+      //   error: err => alert(err.message)
+      // });
+
 
       this.messageService.add({
         severity: "success",
