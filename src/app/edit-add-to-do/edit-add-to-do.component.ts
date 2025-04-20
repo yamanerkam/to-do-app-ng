@@ -9,6 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { AppService, TodoItem, TodoStatus } from '../app.service';
 import { TodoStatusLookUp } from '../shared/enums/todoStatusEnum';
+import { MessageService } from 'primeng/api';
 
 export type outputData = {
   triggerType: 'save' | 'cancel' | 'close';
@@ -30,7 +31,8 @@ export class EditAddToDoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public appService: AppService
+    public appService: AppService,
+    public messageService: MessageService
   ) {
     this.toDoForm = this.fb.group({
       id: [null as string | null],
@@ -74,6 +76,13 @@ export class EditAddToDoComponent implements OnInit {
         this.appService.todoFormToggler('close');
       });
     }
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'BASARILI',
+      detail: `${this.headerName.toLocaleUpperCase()} islemi basarili!`
+    });
+
     this.toDoForm.reset();
   }
 
