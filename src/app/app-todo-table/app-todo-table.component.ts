@@ -5,16 +5,12 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-todo-table',
-  imports: [TableModule,AsyncPipe],
+  imports: [TableModule, AsyncPipe],
   templateUrl: './app-todo-table.component.html',
   styleUrl: './app-todo-table.component.css'
 })
 export class TodoTableComponent {
-  todoList: TodoItem[] = []
+  todoList: TodoItem[] = [];
 
-  constructor(public appService:AppService){
-    // appService.todoListObs$.subscribe((data: TodoItem[]) => {
-    //   this.todoList = data;
-    // });
-  }
+  constructor(public appService: AppService) {}
 }

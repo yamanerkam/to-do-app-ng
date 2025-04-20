@@ -4,9 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { SingletonService } from '../services/singleton.service';
 import { NonSingletonService } from '../services/non-singleton.service';
 import { AppService } from '../app.service';
 
