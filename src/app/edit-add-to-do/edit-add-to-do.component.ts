@@ -1,107 +1,120 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 
-import { DialogModule } from "primeng/dialog";
-import { SelectModule } from 'primeng/select';
-import { ButtonModule } from "primeng/button";
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { FormGroup, FormControl } from "@angular/forms";
+import {DialogModule} from 'primeng/dialog';
+import {SelectModule} from 'primeng/select';
+import {ButtonModule} from 'primeng/button';
+import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 
-import { DatePickerModule } from "primeng/datepicker";
-import { AppService, TodoItem, TodoStatus } from "../app.service";
-import { TodoStatusLookUp } from "../shared/enums/todoStatusEnum";
-
-
+import {DatePickerModule} from 'primeng/datepicker';
+import {AppService, TodoItem, TodoStatus} from '../app.service';
+import {TodoStatusLookUp} from '../shared/enums/todoStatusEnum';
 
 export type outputData = {
-  triggerType: 'save' | 'cancel' | 'close',
-  todoFormData: TodoItem
-}
+    triggerType: 'save' | 'cancel' | 'close';
+    todoFormData: TodoItem;
+};
 
 @Component({
-  selector: "app-edit-app-to-do",
-  imports: [
-    ButtonModule,
-    FormsModule,
-    DatePickerModule,
-    ReactiveFormsModule,
-    DialogModule,
-    SelectModule
-  ],
-  templateUrl: "./edit-add-to-do.component.html",
-  styleUrl: "./edit-add-to-do.component.css",
+    selector: 'app-edit-app-to-do',
+    imports: [
+        ButtonModule,
+        FormsModule,
+        DatePickerModule,
+        ReactiveFormsModule,
+        DialogModule,
+        SelectModule
+    ],
+    templateUrl: './edit-add-to-do.component.html',
+    styleUrl: './edit-add-to-do.component.css'
 })
-
-
 export class EditAddToDoComponent implements OnInit {
-  displayEdit: boolean = false;
-  headerName!: string;
-  toDoForm!: FormGroup;
+    displayEdit : boolean = false;
+    headerName !: string;
+    toDoForm !: FormGroup;
 
-  statusOptions = TodoStatusLookUp;
+    statusOptions = TodoStatusLookUp;
 
-  constructor(private fb: FormBuilder,public appService : AppService) {
-    this.toDoForm = this.fb.group({
-      id: [null as string | null],
-      title: ["", Validators.required],
-      description: ["", Validators.required],
-      status: [null as TodoStatus | null, Validators.required],
-      createdOn: [null as Date | null, Validators.required],
-    }
-    )
-  }
-
-  
-
-
-  ngOnInit(): void {
-    console.log('on init')
-   // this.headerName = this.actionType == "edit" ? "Edit" : "Add";
-
-    this.appService.todoFormVisObs$.subscribe(res=>{
-      this.displayEdit = res;
-      console.log(this.appService.currentTodoSub.value)
-      console.log(this.displayEdit)
-    })
-
-  }
-
- 
-
-  closeDialog(){
-    this.appService.todoFormToggler('close');
-  }
-
-  saveHandler() {
-
-
-    const todoItemDTO : TodoItem = {
-      ...this.toDoForm.value,
-      id: this.toDoForm.value.id ?? Math.floor(Math.random()*1000).toString()
+    constructor(private fb : FormBuilder, public appService : AppService) {
+        this.toDoForm = this
+            .fb
+            .group({
+                id: [null as string | null],
+                title: [
+                    '', Validators.required
+                ],
+                description: [
+                    '', Validators.required
+                ],
+                status: [
+                    null as TodoStatus | null,
+                    Validators.required
+                ],
+                createdOn: [
+                    null as Date | null,
+                    Validators.required
+                ]
+            });
     }
 
+    ngOnInit() : void {
+        console.log('on init');
+        this.headerName = this.toDoForm.value.id
+            ? 'Edit'
+            : 'Add';
 
-    // current todo edit or add 
-
-    // make this two work together
-    this.appService.addToDo(todoItemDTO).subscribe(res=>{
-
-      this.toDoForm.reset();
-      this.appService.todoFormToggler('close')
-    })
-   
-  }
-
-
-
-  invalidFieldChecker(fieldName: string) {
-    if (this.toDoForm.get(fieldName)?.invalid && this.toDoForm.get(fieldName)?.dirty) {
-      return true
-    } else {
-      return false
+        this
+            .appService
+            .todoFormVisObs$
+            .subscribe((res) => {
+                this.displayEdit = res;
+                console.log(this.appService.currentTodoSub.value);
+                console.log(this.displayEdit);
+            });
     }
-  }
 
-  invalidFieldMessage(fieldName: string): string {
-    return `Where is the ${fieldName}???`;
-  }
+    closeDialog() {
+        this
+            .appService
+            .todoFormToggler('close');
+    }
+
+    saveHandler() {
+        const todoItemDTO : TodoItem = {
+            ...this.toDoForm.value,
+            id: this.toDoForm.value.id ?? Math.floor(Math.random() * 1000).toString()
+        };
+
+        const a = 's';
+        console.log();
+
+        // current todo edit or add make this two work together
+        if (this.toDoForm.value.id) {
+            // this. dd
+        } else {
+            this
+                .appService
+                .addToDo(todoItemDTO)
+                .subscribe((res) => {
+                    this
+                        .toDoForm
+                        .reset();
+                    this
+                        .appService
+                        .todoFormToggler('close');
+                });
+        }
+    }
+
+    invalidFieldChecker(fieldName : string) {
+        if (this.toDoForm.get(fieldName)
+            ?.invalid && this.toDoForm.get(fieldName)
+                ?.dirty) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    invalidFieldMessage(fieldName : string) : string {return `Where is the ${fieldName}???`;}
 }
