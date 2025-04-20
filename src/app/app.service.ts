@@ -7,7 +7,7 @@ export interface TodoItem {
   id: string;
   title: string;
   description: string;
-  status: TodoStatusEnum 
+  status: TodoStatusEnum;
   createdOn: Date;
 }
 
@@ -17,10 +17,9 @@ export type TodoStatus = TodoItem['status'];
   providedIn: 'root'
 })
 export class AppService implements OnInit {
-  httpService = inject(HttpClient)
+  httpService = inject(HttpClient);
 
-
-  todoListSubject = new BehaviorSubject<TodoItem[]>([])
+  todoListSubject = new BehaviorSubject<TodoItem[]>([]);
   todoListObs$ = this.todoListSubject.asObservable();
 
   todoFormVisibleSub = new BehaviorSubject<boolean>(false);
@@ -29,9 +28,9 @@ export class AppService implements OnInit {
   currentTodoSub = new BehaviorSubject<TodoItem | undefined>(undefined);
   currentTodoObs$ = this.currentTodoSub.asObservable();
 
-  todoFormToggler(action : 'add' | 'edit' | 'close',todo?:TodoItem){
-    this.currentTodoSub.next(action == 'edit' ? todo : undefined)
-    this.todoFormVisibleSub.next(action == 'add' || action == 'edit')
+  todoFormToggler(action: 'add' | 'edit' | 'close', todo?: TodoItem) {
+    this.currentTodoSub.next(action == 'edit' ? todo : undefined);
+    this.todoFormVisibleSub.next(action == 'add' || action == 'edit');
     // switch (action) {
     //   case 'add':
     //     this.todoFormVisibleSub.next(true);
@@ -49,33 +48,33 @@ export class AppService implements OnInit {
     // }
   }
 
-
-  getTodos():Observable<TodoItem[]>{
-  return this.httpService.get<TodoItem[]>('http://localhost:3000/todoList').pipe(map((res:TodoItem[])=>{
-    this.todoListSubject.next(res)
-    return res;
-  }),
-  catchError((err)=>{
-    throw new Error(err);
-  })
-  );
+  getTodos(): Observable<TodoItem[]> {
+    return this.httpService.get<TodoItem[]>('http://localhost:3000/todoList').pipe(
+      map((res: TodoItem[]) => {
+        this.todoListSubject.next(res);
+        return res;
+      }),
+      catchError((err) => {
+        throw new Error(err);
+      })
+    );
   }
 
-  deleteToDo(todoID:string) : Observable<void>{
-   return this.httpService.delete<void>(`http://localhost:3000/todoList/${todoID}`).pipe(
+  deleteToDo(todoID: string): Observable<void> {
+    return this.httpService.delete<void>(`http://localhost:3000/todoList/${todoID}`).pipe(
       tap(() => {
         const currentList = this.todoListSubject.getValue();
-        const updatedList = currentList.filter(todo => todo.id !== todoID);
+        const updatedList = currentList.filter((todo) => todo.id !== todoID);
         this.todoListSubject.next(updatedList);
       }),
       catchError((err) => {
         throw new Error(err);
       })
-    )
+    );
   }
 
-  addToDo(todo:TodoItem):Observable<TodoItem>{
-    return this.httpService.post<TodoItem>('http://localhost:3000/todoList',todo).pipe(
+  addToDo(todo: TodoItem): Observable<TodoItem> {
+    return this.httpService.post<TodoItem>('http://localhost:3000/todoList', todo).pipe(
       tap((newTodo) => {
         const currentList = this.todoListSubject.getValue();
         this.todoListSubject.next([...currentList, newTodo]);
@@ -90,9 +89,7 @@ export class AppService implements OnInit {
     return this.httpService.put<TodoItem>(`http://localhost:3000/todoList/${todoID}`, updatedTodo).pipe(
       tap((res) => {
         const currentList = this.todoListSubject.getValue();
-        const updatedList = currentList.map(todo =>
-          todo.id === todoID ? res : todo
-        );
+        const updatedList = currentList.map((todo) => (todo.id === todoID ? res : todo));
         this.todoListSubject.next(updatedList);
       }),
       catchError((err) => {
@@ -100,10 +97,8 @@ export class AppService implements OnInit {
       })
     );
   }
-  
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }

@@ -1,5 +1,4 @@
 {
-  "plugins": ["prettier-plugin-brace-style"],
   "printWidth": 8000,
   "trailingComma": "none",
   "bracketSameLine": true,
