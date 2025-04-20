@@ -1,9 +1,0 @@
-{
-  "printWidth": 8000,
-  "trailingComma": "none",
-  "bracketSameLine": true,
-  "linebreak-style": [true, "LF"],
-  "htmlWhitespaceSensitivity": "ignore",
-  "singleQuote": true,
-  "braceStyle": "stroustrup"
-}
