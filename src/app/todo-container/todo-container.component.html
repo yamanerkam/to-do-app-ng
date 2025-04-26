@@ -1,7 +1,5 @@
 <div class="todo-list">
-
-    @for (item of todoList; track $index) {
-        <app-to-do-card [todo]="item"></app-to-do-card>
-        }
+  @for (item of todoList; track $index) {
+    <app-to-do-card [todo]="item"></app-to-do-card>
+  }
 </div>
-

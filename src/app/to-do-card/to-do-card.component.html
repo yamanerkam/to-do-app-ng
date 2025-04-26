@@ -1,13 +1,12 @@
 <p-card [header]="todo.title" class="todo-card" styleClass="ui-card-shadow">
-    <div class="todo-card-body">
-        <p>{{ todo.description }}</p>
-        <p>Status: {{ todo.status }}</p>
-        <p>Created on: {{ todo.createdOn | date: 'd MMMM y' }}</p>
-    </div>
+  <div class="todo-card-body">
+    <p>{{ todo.description }}</p>
+    <p>Status: {{ todo.status }}</p>
+    <p>Created on: {{ todo.createdOn | date: 'd MMMM y' }}</p>
+  </div>
 
-    <div class="todo-card-actions">
-        <button pButton label="Edit" icon="pi pi-pencil" class="p-button-secondary" (click)="openEdit()"></button>
-        <button pButton label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="confirmDelete(todo.id)"></button>
-    </div>
+  <div class="todo-card-actions">
+    <button pButton label="Edit" icon="pi pi-pencil" class="p-button-secondary" (click)="openEdit()"></button>
+    <button pButton label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="confirmDelete(todo.id)"></button>
+  </div>
 </p-card>
-
