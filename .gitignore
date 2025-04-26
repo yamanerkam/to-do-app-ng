@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 db.json
 .prettierrc.json
+.vscode/settings.json
