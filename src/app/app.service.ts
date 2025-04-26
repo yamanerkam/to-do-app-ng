@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, OnInit } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { TodoStatusEnum } from './shared/enums/todoStatusEnum';
 
@@ -13,7 +13,7 @@ export interface TodoItem {
 
 export type ToDoStoreType = {
   toDoList: TodoItem[];
-  toDoFormVisible: Boolean;
+  toDoFormVisible: boolean;
   currentToDo: TodoItem | undefined;
 };
 
@@ -22,46 +22,19 @@ export type TodoStatus = TodoItem['status'];
 @Injectable({
   providedIn: 'root'
 })
-export class AppService implements OnInit {
+export class AppService {
   httpService = inject(HttpClient);
 
   toDoStore = new BehaviorSubject<ToDoStoreType>({ ...({} as ToDoStoreType), toDoFormVisible: false });
 
   toDoStoreObs$ = this.toDoStore.asObservable();
 
-  // todoListSubject = new BehaviorSubject<TodoItem[]>([]);
-  // todoListObs$ = this.todoListSubject.asObservable();
-
-  // todoFormVisibleSub = new BehaviorSubject<boolean>(false);
-  // todoFormVisObs$ = this.todoFormVisibleSub.asObservable();
-
-  // currentTodoSub = new BehaviorSubject<TodoItem | undefined>(undefined);
-  // currentTodoObs$ = this.currentTodoSub.asObservable();
-
   todoFormToggler(action: 'add' | 'edit' | 'close', todo?: TodoItem) {
-    // this.currentTodoSub.next(action == 'edit' ? todo : undefined);
-    // this.todoFormVisibleSub.next(action == 'add' || action == 'edit');
-
     this.toDoStore.next({
       ...this.toDoStore.getValue(),
       toDoFormVisible: action == 'add' || action == 'edit',
       currentToDo: action == 'edit' ? todo : undefined
     });
-    // switch (action) {
-    //   case 'add':
-    //     this.todoFormVisibleSub.next(true);
-    //     break;
-    //   case 'edit':
-    //     this.currentTodoSub.next(todo)
-    //     this.todoFormVisibleSub.next(true);
-    //     break;
-    //   case 'close':
-    //     this.currentTodoSub.next(undefined)
-    //     this.todoFormVisibleSub.next(false)
-    //     break;
-    //   default:
-    //     break;
-    // }
   }
 
   getTodos(): Observable<TodoItem[]> {
@@ -114,8 +87,4 @@ export class AppService implements OnInit {
       })
     );
   }
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

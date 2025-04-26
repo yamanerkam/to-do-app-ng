@@ -17,13 +17,13 @@ export type outputData = {
 };
 
 @Component({
-  selector: 'app-edit-app-to-do',
+  selector: 'app-form-edit-app-to-do',
   imports: [ButtonModule, FormsModule, DatePickerModule, ReactiveFormsModule, DialogModule, SelectModule],
-  templateUrl: './edit-add-to-do.component.html',
-  styleUrl: './edit-add-to-do.component.css'
+  templateUrl: './form-edit-add-to-do.component.html',
+  styleUrl: './form-edit-add-to-do.component.css'
 })
-export class EditAddToDoComponent implements OnInit {
-  displayEdit: Boolean = false;
+export class FormEditAddToDoComponent implements OnInit {
+  displayEdit: boolean = false;
   headerName!: string;
   toDoForm!: FormGroup;
 
