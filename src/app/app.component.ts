@@ -1,23 +1,23 @@
-import { Component, inject, OnInit } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 // import { CommonModule } from "@angular/common";
 // ngFor module yeterli
-import { TopbarComponent } from "./topbar/topbar.component"
-
+import { TopbarComponent } from './topbar/topbar.component';
 
 // genel yaklasim
-import { ConfirmDialogModule } from "primeng/confirmdialog";
-import { ToastModule } from "primeng/toast";
-import { TodoTableComponent } from "./app-todo-table/app-todo-table.component";
-import { TodoContainerComponent } from "./todo-container/todo-container.component";
-import { AppService } from "./app.service";
-import { RxjsService } from "./services/rxjs.service";
-import { Subject } from "rxjs";
-import { EditAddToDoComponent } from "./edit-add-to-do/edit-add-to-do.component";
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { TodoTableComponent } from './app-todo-table/app-todo-table.component';
+import { TodoContainerComponent } from './todo-container/todo-container.component';
+import { AppService } from './app.service';
+import { RxjsService } from './services/rxjs.service';
+import { combineLatest, forkJoin, Subject } from 'rxjs';
+import { EditAddToDoComponent } from './edit-add-to-do/edit-add-to-do.component';
+import { TwoObserablesService } from './services/two-obserables.service';
 
 @Component({
-  selector: "app-root",
+  selector: 'app-root',
   imports: [
     FormsModule,
     // ask about NgFor Import
@@ -28,45 +28,38 @@ import { EditAddToDoComponent } from "./edit-add-to-do/edit-add-to-do.component"
     TodoContainerComponent,
     EditAddToDoComponent
   ],
-  templateUrl: "./app.component.html",
-  styleUrl: "./app.component.css",
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  appService = inject(AppService)
-  rxjsService = inject(RxjsService)
+  appService = inject(AppService);
+  rxjsService = inject(RxjsService);
+  obsService = inject(TwoObserablesService);
 
   subjectExample2 = new Subject<number>();
 
-  title = "to-do-app-ng";
-  todoLength = ''
-  searchText = "";
-
-
-
+  title = 'to-do-app-ng';
+  todoLength = '';
+  searchText = '';
 
   ngOnInit(): void {
+    this.appService.getTodos().subscribe();
 
-      this.appService.getTodos().subscribe()
-    // this.rxjsService.observableExample$.subscribe(data=>console.log(data))
+    combineLatest([this.obsService.obs1$, this.obsService.obs2$]).subscribe(([value1, value2]) => {
+      console.log('combineLatest');
+      console.log('Subject 1 emitted:', value1);
+      console.log('Subject 2 emitted:', value2);
+      console.log('///////////////////////////////////');
+    });
 
+    forkJoin([this.obsService.obs1$, this.obsService.obs2$]).subscribe(([value1, value2]) => {
+      console.log('forkJoin');
+      console.log('Subject 1 emitted:', value1);
+      console.log('Subject 2 emitted:', value2);
+      console.log('///////////////////////////////////');
+    });
 
-    // this.subjectExample2.subscribe(val => console.log('A:', val));
-    // this.subjectExample2.subscribe(val => console.log('B:', val));
-    // this.subjectExample2.next(33)
-
-
-    // this.rxjsService.subjectExample.subscribe(val => console.log('A:', val));
-    // this.rxjsService.subjectExample.subscribe(val => console.log('B:', val));
-    // this.rxjsService.subjectExample.next(4444)
-
-
+    this.obsService.subject1.next('A');
+    this.obsService.subject2.next(1);
   }
-
-
-
-
-
-
-
-
 }
