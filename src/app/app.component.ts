@@ -8,10 +8,8 @@ import { TopbarComponent } from './topbar/topbar.component';
 // genel yaklasim
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-import { TodoTableComponent } from './app-todo-table/app-todo-table.component';
 import { TodoContainerComponent } from './todo-container/todo-container.component';
 import { AppService } from './app.service';
-import { RxjsService } from './services/rxjs.service';
 import { combineLatest, forkJoin, Subject } from 'rxjs';
 import { EditAddToDoComponent } from './edit-add-to-do/edit-add-to-do.component';
 import { TwoObserablesService } from './services/two-obserables.service';
@@ -24,7 +22,6 @@ import { TwoObserablesService } from './services/two-obserables.service';
     TopbarComponent,
     ConfirmDialogModule,
     ToastModule,
-    TodoTableComponent,
     TodoContainerComponent,
     EditAddToDoComponent
   ],
@@ -33,14 +30,11 @@ import { TwoObserablesService } from './services/two-obserables.service';
 })
 export class AppComponent implements OnInit {
   appService = inject(AppService);
-  rxjsService = inject(RxjsService);
   obsService = inject(TwoObserablesService);
 
   subjectExample2 = new Subject<number>();
 
   title = 'to-do-app-ng';
-  todoLength = '';
-  searchText = '';
 
   ngOnInit(): void {
     this.appService.getTodos().subscribe();

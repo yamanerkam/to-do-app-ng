@@ -7,7 +7,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { FormGroup } from '@angular/forms';
 
 import { DatePickerModule } from 'primeng/datepicker';
-import { AppService, TodoItem, TodoStatus } from '../app.service';
+import { AppService, TodoItem, TodoStatus, ToDoStoreType } from '../app.service';
 import { TodoStatusLookUp } from '../shared/enums/todoStatusEnum';
 import { MessageService } from 'primeng/api';
 
@@ -23,7 +23,7 @@ export type outputData = {
   styleUrl: './edit-add-to-do.component.css'
 })
 export class EditAddToDoComponent implements OnInit {
-  displayEdit: boolean = false;
+  displayEdit: Boolean = false;
   headerName!: string;
   toDoForm!: FormGroup;
 
@@ -44,17 +44,16 @@ export class EditAddToDoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appService.todoFormVisObs$.subscribe((res) => {
-      this.displayEdit = res;
-      console.log(this.appService.currentTodoSub.value);
+    this.appService.toDoStoreObs$.subscribe((store: ToDoStoreType) => {
+      this.displayEdit = store.toDoFormVisible;
 
-      this.headerName = this.appService.currentTodoSub.value?.id ? 'Edit' : 'Add';
+      this.headerName = store.currentToDo?.id ? 'Edit' : 'Add';
       if (this.headerName == 'Edit') {
-        const todo = this.appService.currentTodoSub.value!;
+        const todo = store.currentToDo;
 
         this.toDoForm.patchValue({
           ...todo,
-          createdOn: todo.createdOn ? new Date(todo.createdOn) : null
+          createdOn: todo?.createdOn ? new Date(todo.createdOn) : null
         });
       }
     });
@@ -62,6 +61,7 @@ export class EditAddToDoComponent implements OnInit {
 
   closeDialog() {
     this.appService.todoFormToggler('close');
+    this.toDoForm.reset();
   }
 
   saveHandler() {
@@ -72,16 +72,19 @@ export class EditAddToDoComponent implements OnInit {
       id: this.toDoForm.value.id ?? Math.floor(Math.random() * 1000).toString()
     };
 
-    // current todo edit or add make this two work together
     if (typeOfAction == 'edit') {
       this.appService.updateToDo(this.toDoForm.value.id, todoItemDTO).subscribe((res) => {
         this.appService.todoFormToggler('close');
+        this.toDoForm.reset();
       });
     } else {
       this.appService.addToDo(todoItemDTO).subscribe((res) => {
         this.appService.todoFormToggler('close');
+        this.toDoForm.reset();
       });
     }
+
+    // message service should be added !!!
 
     this.messageService.add({
       severity: 'success',

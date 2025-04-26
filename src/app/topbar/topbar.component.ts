@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -15,10 +15,6 @@ import { AppService } from '../app.service';
   providers: [NonSingletonService]
 })
 export class TopbarComponent implements OnInit {
-  // singletonService = Inject(SingletonService)
-
-  @Input() searchText: string = '';
-
   ngOnInit(): void {}
 
   constructor(private appService: AppService) {}
