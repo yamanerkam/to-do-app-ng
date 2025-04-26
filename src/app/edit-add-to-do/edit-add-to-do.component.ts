@@ -47,9 +47,15 @@ export class EditAddToDoComponent implements OnInit {
     this.appService.todoFormVisObs$.subscribe((res) => {
       this.displayEdit = res;
       console.log(this.appService.currentTodoSub.value);
+
       this.headerName = this.appService.currentTodoSub.value?.id ? 'Edit' : 'Add';
       if (this.headerName == 'Edit') {
-        this.toDoForm.patchValue(this.appService.currentTodoSub.getValue() ?? {});
+        const todo = this.appService.currentTodoSub.value!;
+
+        this.toDoForm.patchValue({
+          ...todo,
+          createdOn: todo.createdOn ? new Date(todo.createdOn) : null
+        });
       }
     });
   }
