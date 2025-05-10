@@ -26,20 +26,20 @@ import { AppService, TodoItem } from '../app.service';
 export class ToDoCardComponent implements OnInit {
   @Input() todo!: TodoItem;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   constructor(
     private confirmationService: ConfirmationService,
     private appService: AppService
-  ) {}
+  ) { }
 
-  confirmDelete(id: string) {
+  confirmDelete(todo: TodoItem) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete this task?',
       header: 'Confirm Delete',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.appService.deleteToDo(id).subscribe({
+        this.appService.deleteToDo(todo).subscribe({
           next: () => console.log('Deleted successfully'),
           error: (err) => alert(err.message)
         });

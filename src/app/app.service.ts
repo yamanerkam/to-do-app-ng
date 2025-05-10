@@ -50,12 +50,10 @@ export class AppService {
     );
   }
 
-  deleteToDo(todoID: string): Observable<void> {
-    return this.httpService.delete<void>(`http://localhost:3000/todoList/${todoID}`).pipe(
+  deleteToDo(todo: TodoItem): Observable<void> {
+    return this.httpService.delete<void>(`http://localhost:3000/todoList/${todo.id}`).pipe(
       tap(() => {
-        const currentStore = this.toDoStore.getValue();
-        const updatedList = currentStore.toDoList.filter((todo) => todo.id !== todoID);
-        this.toDoStore.next({ ...currentStore, toDoList: updatedList });
+        this.toDoStoreToDoListReducer('delete', todo)
       }),
       catchError((err) => {
         throw new Error(err);
@@ -66,8 +64,7 @@ export class AppService {
   addToDo(todo: TodoItem): Observable<TodoItem> {
     return this.httpService.post<TodoItem>('http://localhost:3000/todoList', todo).pipe(
       tap((newTodo) => {
-        const currentStore = this.toDoStore.getValue();
-        this.toDoStore.next({ ...currentStore, toDoList: [...currentStore.toDoList, newTodo] });
+        this.toDoStoreToDoListReducer('add', newTodo)
       }),
       catchError((err) => {
         throw new Error(err);
@@ -78,13 +75,30 @@ export class AppService {
   updateToDo(todoID: string, updatedTodo: TodoItem): Observable<TodoItem> {
     return this.httpService.put<TodoItem>(`http://localhost:3000/todoList/${todoID}`, updatedTodo).pipe(
       tap((res) => {
-        const currentStore = this.toDoStore.getValue();
-        const updatedList = currentStore.toDoList.map((todo) => (todo.id === todoID ? res : todo));
-        this.toDoStore.next({ ...currentStore, toDoList: updatedList });
+        this.toDoStoreToDoListReducer('update', updatedTodo)
       }),
       catchError((err) => {
         throw new Error(err);
       })
     );
+  }
+
+  toDoStoreToDoListReducer(action: 'delete' | 'add' | 'update', data: TodoItem) {
+    const currentStore = this.toDoStore.getValue()
+
+    switch (action) {
+      case 'delete':
+        this.toDoStore.next({ ...currentStore, toDoList: currentStore.toDoList.filter((todo) => todo.id !== data.id) });
+        break;
+      case 'add':
+        this.toDoStore.next({ ...currentStore, toDoList: [...currentStore.toDoList, data] });
+        break;
+      case 'update':
+        this.toDoStore.next({ ...currentStore, toDoList: currentStore.toDoList.map((todo) => todo.id == data.id ? data : todo) })
+        break;
+      default:
+        break;
+    }
+
   }
 }
